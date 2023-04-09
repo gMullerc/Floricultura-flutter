@@ -1,23 +1,16 @@
 import 'package:floricultura/components/card_image.dart';
 import 'package:floricultura/components/card_text.dart';
-import 'package:floricultura/components/price_circle.dart';
-import 'package:floricultura/components/progress_bar.dart';
+import 'package:floricultura/components/cards/ComboProgressBar.dart';
+import 'package:floricultura/models/planta.dart';
 import 'package:floricultura/screens/detail_plants.dart';
 import 'package:floricultura/themes/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class PlantsCard extends StatefulWidget {
-  final String nome;
-  final String descricao;
-  final String image;
-  final String price;
-
-  PlantsCard(
-      {Key? key,
-      required this.nome,
-      required this.descricao,
-      required this.image,
-      required this.price})
+  final Planta planta;
+  final List<Planta> listaDePlanta;
+  const PlantsCard(
+      {Key? key, required this.planta, required this.listaDePlanta})
       : super(key: key);
 
   @override
@@ -27,16 +20,23 @@ class PlantsCard extends StatefulWidget {
 class _PlantsCardState extends State<PlantsCard> {
   Map<String, String>? map;
 
-  _openTransactionFormModal(BuildContext context) {
+  _openPlantsDetails(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DetailPlants()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => DetailPlants(
+                  planta: widget.planta,
+                  listaDePlanta: widget.listaDePlanta,
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(25),
+      splashColor: ThemeColors.secondaryColor,
       onTap: () {
-        _openTransactionFormModal(context);
+        _openPlantsDetails(context);
       },
       child: SizedBox(
         height: 270,
@@ -55,7 +55,7 @@ class _PlantsCardState extends State<PlantsCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CardImage(image: widget.image),
+                  CardImage(image: widget.planta.image),
                 ],
               ),
               Expanded(
@@ -67,47 +67,16 @@ class _PlantsCardState extends State<PlantsCard> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 15, 8, 15),
-                            child: CardText(
-                                nome: widget.nome, descricao: widget.descricao),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 110,
-                                  child: Column(
-                                    children: [
-                                      ProgressBar(),
-                                      ProgressBar(),
-                                      ProgressBar(),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            child: SizedBox(
+                              width: 170,
+                              child: CardText(
+                                  nome: widget.planta.name,
+                                  descricao: widget.planta.description),
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                                height: 65,
-                                width: 65,
-                                child: PriceCircle(
-                                  price: widget.price,
-                                ),
-                              )
-                            ],
-                          )
                         ],
                       ),
+                      ComboProgressBar(price: widget.planta.price),
                     ],
                   ),
                 ),

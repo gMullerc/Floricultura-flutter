@@ -1,4 +1,4 @@
-import 'package:floricultura/home.dart';
+import 'package:floricultura/screens/plants_list.dart';
 import 'package:floricultura/themes/my_theme.dart';
 import 'package:flutter/material.dart';
 

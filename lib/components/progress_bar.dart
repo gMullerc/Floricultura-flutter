@@ -7,7 +7,6 @@ class ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Column(

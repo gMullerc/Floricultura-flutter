@@ -25,7 +25,6 @@ class CardText extends StatelessWidget {
               color: ThemeColors.primaryFontColor),
         ),
         SizedBox(
-          width: 170,
           child: Text(
             descricao,
             style: const TextStyle(
